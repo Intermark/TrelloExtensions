@@ -8,5 +8,9 @@
             "js": ["jquery-1.7.2.min.js","trelloextensions.js"],
             "css": ["trelloextensions.css"]
         }
-    ]
+    ],
+    "permissions": [
+        "clipboardWrite"
+    ],
+    "background_page": "background.html"
 }
