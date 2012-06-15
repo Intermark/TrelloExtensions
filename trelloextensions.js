@@ -9,7 +9,9 @@ $(function(){
     //watch filtering
     $('.js-filter-toggle').live('mouseup',function(e){
         setTimeout(function() {
-            filtered=$('.js-filter-cards').hasClass('is-on');
+            $('.list-card:not(.matched-card)').each(function () {
+                
+            });
         });
     });
 
@@ -66,9 +68,10 @@ var Card = function (el) {
     var hidingTextTimeout;
     var $card = $(el)
         .on('DOMNodeInserted', function (e) {
+            console.log(!hidingText, $(e.target).is('.list-card-title'), e.target == $card[0]);
             if (!hidingText && ($(e.target).is('.list-card-title') || e.target == $card[0])) {
                 clearTimeout(hidingTextTimeout);
-                hidingTextTimeout = setTimeout(hideText);
+                //hidingTextTimeout = setTimeout(hideText);
             }
         });
 
@@ -96,15 +99,16 @@ var Card = function (el) {
     var noHiddenText = '#{none}#';
     var hideText = function () {
         var $title = $('a.list-card-title', $card);
-        if ($title[0]) {
-            hidingText = true;
-            var titleText = $title[0].text;
-            var matches = titleText.match(regEx);
-            var hiddenText = matches ? matches[1] : noHiddenText;
-            if ($card.parent()[0]) {
-                $title[0].textContent = titleText.replace(regEx, '');
-                $badge.attr({title: hiddenText });
-            }
+        if (!$title[0] || hidingText) {
+            return;
+        }
+        hidingText = true;
+        var titleText = $title[0].text;
+        var matches = titleText.match(regEx);
+        var hiddenText = matches ? matches[1] : noHiddenText;
+        if ($card.parent()[0]) {
+            $title.html(titleText.replace(regEx, '<span style="display: none;">' + hiddenText + '</span>'));
+            $badge.attr({title: hiddenText });
         }
         hidingText = false;
     };
