@@ -1,0 +1,12 @@
+{
+    "name": "Trello Extensions",
+    "version": "1.0",
+    "description": "Adds helpers to your Trello",
+    "content_scripts": [
+        {
+            "matches": ["https://trello.com/*"],
+            "js": ["jquery-1.7.2.min.js","trelloextensions.js"],
+            "css": ["trelloextensions.css"]
+        }
+    ]
+}
